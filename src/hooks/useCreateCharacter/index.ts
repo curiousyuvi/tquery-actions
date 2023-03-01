@@ -4,7 +4,7 @@ import { UseMutationResult, useMutation } from '@tanstack/react-query';
 
 type CreateCharacterAPI = (character: Character) => Promise<Character>;
 type UseCreateCharacter = (
-  onSuccess: () => void,
+  onSuccess?: () => void,
 ) => UseMutationResult<Character, unknown, Character, unknown>;
 
 const API_ENDPOINT = 'https://characters-jsonserver.up.railway.app/characters';
