@@ -6,23 +6,23 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 
-type EditCharacterAPI = (character: Character) => Promise<Character>;
-type UseEditCharacter = (
+type UpdateCharacterAPI = (character: Character) => Promise<Character>;
+type UseUpdateCharacter = (
   onSuccess?: () => void,
 ) => UseMutationResult<Character, unknown, Character, unknown>;
 
 const API_ENDPOINT = 'https://characters-jsonserver.up.railway.app/characters';
 
-const editCharacterAPI: EditCharacterAPI = async (character) => {
+const updateCharacterAPI: UpdateCharacterAPI = async (character) => {
   const res = await request.put(API_ENDPOINT + `/${character.id}`).send(character);
   return res.body;
 };
 
-export const useEditCharacter: UseEditCharacter = (onSuccess) => {
+export const useUpdateCharacter: UseUpdateCharacter = (onSuccess) => {
   const queryClient = useQueryClient();
 
   const mutation: UseMutationResult<Character, any, Character, any> = useMutation({
-    mutationFn: editCharacterAPI,
+    mutationFn: updateCharacterAPI,
     onSuccess,
   });
 
