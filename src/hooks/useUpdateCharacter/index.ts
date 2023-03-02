@@ -1,10 +1,6 @@
 import * as request from 'superagent';
 import { Character } from '../../interfaces/Character';
-import {
-  UseMutationResult,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { UseMutationResult, useMutation } from '@tanstack/react-query';
 
 type UpdateCharacterAPI = (character: Character) => Promise<Character>;
 type UseUpdateCharacter = (
@@ -19,8 +15,6 @@ const updateCharacterAPI: UpdateCharacterAPI = async (character) => {
 };
 
 export const useUpdateCharacter: UseUpdateCharacter = (onSuccess) => {
-  const queryClient = useQueryClient();
-
   const mutation: UseMutationResult<Character, any, Character, any> = useMutation({
     mutationFn: updateCharacterAPI,
     onSuccess,
