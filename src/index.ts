@@ -6,4 +6,6 @@ export {
   QueryClientProvider as TQueryClientProvider,
   QueryClient as TQueryClient,
   useQueryClient as useTQueryClient,
+  dehydrate,
+  Hydrate,
 } from '@tanstack/react-query';
