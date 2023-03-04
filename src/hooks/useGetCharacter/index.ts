@@ -5,8 +5,13 @@ import { TQueryClient } from '../..';
 
 type GetCharacterAPI = (id: number) => Promise<Character>;
 type UseGetCharacter = (id: number) => UseQueryResult<Character, any>;
+type InvalidateQuery = (tqueryClient: TQueryClient, characterID: number) => void;
 
 const API_ENDPOINT = 'https://characters-jsonserver.up.railway.app/characters';
+
+const invalidateQuery: InvalidateQuery = (tqueryClient, characterID) => {
+  tqueryClient.invalidateQueries({ queryKey: ['characters', characterID] });
+};
 
 const getCharacterAPI: GetCharacterAPI = async (id) => {
   const res = await request.get(API_ENDPOINT + `/${id}`);
@@ -20,8 +25,6 @@ export const useGetCharacter: UseGetCharacter = (id) => {
   });
   return {
     ...query,
-    invalidateQuery: (tqueryClient: TQueryClient, characterID: number) => {
-      tqueryClient.invalidateQueries({ queryKey: ['characters', characterID] });
-    },
+    invalidateQuery,
   };
 };
