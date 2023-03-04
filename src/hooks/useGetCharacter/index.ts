@@ -1,6 +1,7 @@
 import * as request from 'superagent';
 import { Character } from '../../interfaces/Character';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { TQueryClient } from '../..';
 
 type GetCharacterAPI = (id: number) => Promise<Character>;
 type UseGetCharacter = (id: number) => UseQueryResult<Character, any>;
@@ -17,5 +18,10 @@ export const useGetCharacter: UseGetCharacter = (id) => {
     queryKey: ['characters', id],
     queryFn: () => getCharacterAPI(id),
   });
-  return query;
+  return {
+    ...query,
+    invalidateQuery: (tqueryClient: TQueryClient, characterID: number) => {
+      tqueryClient.invalidateQueries({ queryKey: ['characters', characterID] });
+    },
+  };
 };
